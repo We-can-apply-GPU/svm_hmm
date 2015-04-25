@@ -13,10 +13,10 @@ def read_examples(filename, sparm):
     print len(label)
     ans = []
     for (i, (speaker_id, v)) in enumerate(label.iteritems()):
+        print("Hihi.{}".fo)
         for (sequence_id, content) in v.iteritems():
             content = [util.char2index[x] for x in content]
             ans.append((np.array(fbank[speaker_id][sequence_id]), np.array(content)))
-    print(ans)
     return ans
 
 def init_model(sample, sm, sparm):

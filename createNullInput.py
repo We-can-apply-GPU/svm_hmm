@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 FBANKS = 69
 import numpy as np
-import sys
 def charto48(c):
     a = 0
     chrmap = open('data/48_idx_chr.map','r')
@@ -14,28 +13,27 @@ def charto48(c):
                 break
     return a
 
-def read_examples(filename,infileName):
+def read_examples(filename):
     ark = open('data/fbank/' + filename + '.ark','r')
-    lab = open('data/label/' + filename + '.lab','r')
+    #lab = open('data/label/' + filename + '.lab','r')
     datum = []
     curPos = 0
     seqDic = {}
 
     for line in ark:
         s = line.rstrip().split(' ')
-        for line in lab:
-            l = line.rstrip().split(',')
-            if s[0] == l[0]:        #map label to train data
-                for i in range(1,len(s)):
-                    s[i] = float(s[i])
-                seqs = s[0].rstrip().split('_')
-                s[0] = seqs[0] + seqs[1]
-                s.append(l[1])
-                datum.append(s)
-                #curPos += 1
-                break
+        #for line in lab:
+            #l = line.rstrip().split(',')
+        #if s[0] == l[0]:        #map label to train data
+        for i in range(1,len(s)):
+            s[i] = float(s[i])
+        seqs = s[0].rstrip().split('_')
+        s[0] = seqs[0] + seqs[1]
+        s.append("aa")
+        datum.append(s)
+        #curPos += 1
 
-    with open("example/" + infileName,'w') as fout:
+    with open("example/test.dat",'w') as fout:
         idCnt = 0
         #until now , datum is the list of [ID  FBANKfeature phone]
         prevId = ""
@@ -50,5 +48,5 @@ def read_examples(filename,infileName):
                 fout.write("{}:{} ".format(j+1,datum[i][j+1]))
             fout.write('\n')
 if __name__     == "__main__":
-    #Usage ./createInput.py DesfileName inFileName
-    read_examples(sys.argv[1],sys.argv[2])
+    #print(read_examples("trainToy"))
+    read_examples("test")
